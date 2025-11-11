@@ -1,7 +1,8 @@
-import ejemplo from './ejemplo.routes.js';
-import { Router } from 'express';
-const indexRosman = Router();
+import { Router } from "express";
+import boletoRouter from "./boleto.routes.js";
 
-indexRosman.use('/ejemplo', ejemplo);
+const indexRoutes = Router();
 
-export default indexRosman;
+indexRoutes.use("/boleterias", boletoRouter);
+
+export default indexRoutes;
