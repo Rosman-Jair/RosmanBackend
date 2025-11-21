@@ -1,4 +1,4 @@
-const API_URL = "/api/boleterias/";
+const API_URL = "/Tickets/boletos/";
 const form = document.getElementById('ticketForm');
 const totalDisplay = document.getElementById('total');
 const boletosContainer = document.getElementById('boletosContainer');
@@ -39,6 +39,7 @@ form.addEventListener('submit', async (e) => {
   const boleto = { nombre, edad, cantidad, eventos: eventosSeleccionados, total };
 
   try {
+    let mensaje = "";
     if (editingId) {
       const res = await fetch(API_URL + editingId, {
         method: "PUT",
@@ -50,6 +51,7 @@ form.addEventListener('submit', async (e) => {
         alert("Error al actualizar: " + (err.msg || "error"));
         return;
       }
+      mensaje = "Boleto actualizado con éxito ✅";
     } else {
       const res = await fetch(API_URL, {
         method: "POST",
@@ -61,16 +63,23 @@ form.addEventListener('submit', async (e) => {
         alert("Error al guardar: " + (err.msg || "error"));
         return;
       }
+      mensaje = "Gracias por comprar, revisa tu dashboard ✅";
     }
 
+    // Reset del formulario y estados
     form.reset();
     editarLimpiarEstados();
     actualizarTotal();
     await getBoletos();
+
+    // Mensaje de confirmación
+    alert(mensaje);
+
   } catch (error) {
     alert("Error de conexión con el servidor");
   }
 });
+
 
 async function getBoletos() {
   try {
